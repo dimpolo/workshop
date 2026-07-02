@@ -37,7 +37,7 @@ def load_meta(page_dir: Path):
 def discover_pages():
     pages = []
     for page_dir in sorted(PAGES_DIR.iterdir()):
-        if not page_dir.is_dir() or page_dir.name.startswith("_"):
+        if not page_dir.is_dir():
             continue
         title, description = load_meta(page_dir)
         pages.append({"name": page_dir.name, "title": title, "description": description})
