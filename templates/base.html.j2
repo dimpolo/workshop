@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Claude Code Workshop{% endblock %}</title>
+  {% block head_extra %}{% endblock %}
+</head>
+<body>
+  <header>
+    <h1><a href="{{ nav[0].href }}">Claude Code Workshop</a></h1>
+    <nav>
+      <ul>
+        {% for item in nav %}
+        <li><a href="{{ item.href }}">{{ item.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <p>Built with <a href="https://claude.com/claude-code">Claude Code</a> during the workshop.</p>
+  </footer>
+</body>
+</html>

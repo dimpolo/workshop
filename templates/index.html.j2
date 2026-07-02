@@ -1,0 +1,16 @@
+{% extends "base.html.j2" %}
+
+{% block title %}Claude Code Workshop{% endblock %}
+
+{% block content %}
+<p>Every page below was vibe-coded by a workshop participant using Claude Code.</p>
+
+<ul class="page-list">
+  {% for page in pages %}
+  <li>
+    <a href="{{ page.href }}"><strong>{{ page.title }}</strong></a>
+    <p>{{ page.description }}</p>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}
