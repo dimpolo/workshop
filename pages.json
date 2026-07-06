@@ -1,3 +1,4 @@
 [
-  { "name": "_example", "title": "Example Page", "description": "A short one-line description of what this page is about." }
+  { "name": "_example", "title": "Example Page", "description": "A short one-line description of what this page is about." },
+  { "name": "rudi", "title": "Frieren's Forecast", "description": "An ancient elf mage delivers the current Stuttgart weather forecast, deadpan as ever." }
 ]
