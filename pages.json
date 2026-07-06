@@ -1,3 +1,4 @@
 [
-  { "name": "_example", "title": "Example Page", "description": "A short one-line description of what this page is about." }
+  { "name": "_example", "title": "Example Page", "description": "A short one-line description of what this page is about." },
+  { "name": "bk-water-tank", "title": "BK's Water Tank", "description": "A live weather-driven water tank sim: auto-mixes warm/cold sources (with a heater backup) to hit a target temperature, charted in real time." }
 ]

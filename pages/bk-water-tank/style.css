@@ -1,0 +1,79 @@
+h2 {
+  color: #2b8be2;
+}
+
+.notice {
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  background: #e8f0fe;
+  color: #1a4a8a;
+  font-size: 0.9rem;
+}
+
+.notice-warning {
+  background: #fff4e5;
+  color: #8a5a1a;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin: 1.5rem 0;
+}
+
+.controls label {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  margin-top: 0.75rem;
+}
+
+.controls .value {
+  font-weight: 400;
+  color: #555;
+}
+
+.controls input[type="range"] {
+  width: 100%;
+}
+
+.readouts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.readouts div {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.25rem;
+}
+
+.readouts .label {
+  color: #555;
+}
+
+#chart {
+  width: 100%;
+  height: auto;
+  border: 1px solid #ddd;
+  border-radius: 0.375rem;
+  background: #fafafa;
+}
+
+.equations {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ddd;
+}
+
+.equations .eq {
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  background: #f4f4f4;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  overflow-x: auto;
+}
