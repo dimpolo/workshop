@@ -1,3 +1,4 @@
 [
-  { "name": "_example", "title": "Example Page", "description": "A short one-line description of what this page is about." }
+  { "name": "_example", "title": "Example Page", "description": "A short one-line description of what this page is about." },
+  { "name": "max", "title": "Staircase Calculator", "description": "Calculate the steps and floor space needed for a staircase." }
 ]
