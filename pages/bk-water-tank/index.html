@@ -9,14 +9,20 @@
 </head>
 <body>
   <main>
-    <h2>BK's Water Tank</h2>
-    <p>
-      A simulated 20&nbsp;L water tank fed by a warm and a cold source, live
-      auto-mixed to hit a target temperature and watched as it settles over
-      time. If the target is hotter than the warm source alone can supply,
-      an inline heater tops up the inflow — see the readouts and the "how it
-      works" section below for the details.
-    </p>
+    <div class="mode-toggle">
+      <button id="tank-btn" class="mode-btn active">Tank Mode</button>
+      <button id="snakes-btn" class="mode-btn">Snakes Game</button>
+    </div>
+
+    <div id="tank-mode" class="mode-content">
+      <h2>BK's Water Tank</h2>
+      <p>
+        A simulated 20&nbsp;L water tank fed by a warm and a cold source, live
+        auto-mixed to hit a target temperature and watched as it settles over
+        time. If the target is hotter than the warm source alone can supply,
+        an inline heater tops up the inflow — see the readouts and the "how it
+        works" section below for the details.
+      </p>
 
     <p id="data-notice" class="notice" hidden></p>
     <p id="range-warning" class="notice notice-warning" hidden></p>
@@ -99,6 +105,23 @@
         in seconds instead of minutes.
       </p>
     </section>
+    </div>
+
+    <div id="snakes-mode" class="mode-content" hidden>
+      <h2>Snake Game</h2>
+      <p class="snakes-instructions">Use <strong>arrow keys</strong> to move the snake. Eat the orange food to grow and gain points!</p>
+      <div class="snakes-container">
+        <canvas id="snakes-canvas" width="400" height="400"></canvas>
+        <div id="snakes-ui">
+          <div id="snakes-score">Score: 0</div>
+          <div id="snakes-game-over" hidden>
+            <p>Game Over!</p>
+            <p id="snakes-final-score"></p>
+            <button id="snakes-play-again">Play Again</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 
   <script src="../../shared/layout.js" defer></script>

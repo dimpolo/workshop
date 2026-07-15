@@ -216,3 +216,151 @@
   setInterval(tick, TICK_MS);
   tick();
 })();
+
+// Snakes Game
+(function () {
+  const GRID_SIZE = 20;
+  const CELL_SIZE = 20;
+  const MOVE_SPEED_MS = 150;
+
+  const canvas = document.getElementById("snakes-canvas");
+  const ctx = canvas.getContext("2d");
+  const scoreDisplay = document.getElementById("snakes-score");
+  const gameOverDiv = document.getElementById("snakes-game-over");
+  const finalScoreDisplay = document.getElementById("snakes-final-score");
+  const playAgainBtn = document.getElementById("snakes-play-again");
+  const tankBtn = document.getElementById("tank-btn");
+  const snakesBtn = document.getElementById("snakes-btn");
+  const tankMode = document.getElementById("tank-mode");
+  const snakesMode = document.getElementById("snakes-mode");
+
+  let snake = [{ x: 10, y: 10 }];
+  let direction = { x: 1, y: 0 };
+  let nextDirection = { x: 1, y: 0 };
+  let food = randomFood();
+  let score = 0;
+  let gameRunning = false;
+  let gameOver = false;
+  let moveTimer = null;
+
+  function randomFood() {
+    let newFood;
+    do {
+      newFood = { x: Math.floor(Math.random() * GRID_SIZE), y: Math.floor(Math.random() * GRID_SIZE) };
+    } while (snake.some((seg) => seg.x === newFood.x && seg.y === newFood.y));
+    return newFood;
+  }
+
+  function draw() {
+    ctx.fillStyle = "#1a1a1a";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Draw snake
+    snake.forEach((seg, idx) => {
+      ctx.fillStyle = idx === 0 ? "#2b8be2" : "#64b5f6";
+      ctx.fillRect(seg.x * CELL_SIZE, seg.y * CELL_SIZE, CELL_SIZE - 1, CELL_SIZE - 1);
+    });
+
+    // Draw food
+    ctx.fillStyle = "#ff9800";
+    ctx.fillRect(food.x * CELL_SIZE, food.y * CELL_SIZE, CELL_SIZE - 1, CELL_SIZE - 1);
+  }
+
+  function moveSnake() {
+    direction = nextDirection;
+    const head = snake[0];
+    const newHead = { x: head.x + direction.x, y: head.y + direction.y };
+
+    // Check wall collision
+    if (newHead.x < 0 || newHead.x >= GRID_SIZE || newHead.y < 0 || newHead.y >= GRID_SIZE) {
+      endGame();
+      return;
+    }
+
+    // Check self collision
+    if (snake.some((seg) => seg.x === newHead.x && seg.y === newHead.y)) {
+      endGame();
+      return;
+    }
+
+    snake.unshift(newHead);
+
+    // Check food collision
+    if (newHead.x === food.x && newHead.y === food.y) {
+      score += 10;
+      scoreDisplay.textContent = `Score: ${score}`;
+      food = randomFood();
+    } else {
+      snake.pop();
+    }
+
+    draw();
+  }
+
+  function startGame() {
+    snake = [{ x: 10, y: 10 }];
+    direction = { x: 1, y: 0 };
+    nextDirection = { x: 1, y: 0 };
+    food = randomFood();
+    score = 0;
+    gameOver = false;
+    gameRunning = true;
+    scoreDisplay.textContent = `Score: 0`;
+    gameOverDiv.hidden = true;
+    draw();
+
+    if (moveTimer) clearInterval(moveTimer);
+    moveTimer = setInterval(moveSnake, MOVE_SPEED_MS);
+  }
+
+  function endGame() {
+    gameRunning = false;
+    gameOver = true;
+    if (moveTimer) clearInterval(moveTimer);
+    finalScoreDisplay.textContent = `Final Score: ${score}`;
+    gameOverDiv.hidden = false;
+  }
+
+  function switchMode(toSnakes) {
+    if (toSnakes) {
+      tankMode.hidden = true;
+      snakesMode.hidden = false;
+      tankBtn.classList.remove("active");
+      snakesBtn.classList.add("active");
+      if (!gameRunning && !gameOver) startGame();
+    } else {
+      tankMode.hidden = false;
+      snakesMode.hidden = true;
+      tankBtn.classList.add("active");
+      snakesBtn.classList.remove("active");
+      if (moveTimer) clearInterval(moveTimer);
+    }
+  }
+
+  document.addEventListener("keydown", (e) => {
+    if (!gameRunning || !snakesMode.hidden) return;
+
+    switch (e.key) {
+      case "ArrowUp":
+        if (direction.y === 0) nextDirection = { x: 0, y: -1 };
+        e.preventDefault();
+        break;
+      case "ArrowDown":
+        if (direction.y === 0) nextDirection = { x: 0, y: 1 };
+        e.preventDefault();
+        break;
+      case "ArrowLeft":
+        if (direction.x === 0) nextDirection = { x: -1, y: 0 };
+        e.preventDefault();
+        break;
+      case "ArrowRight":
+        if (direction.x === 0) nextDirection = { x: 1, y: 0 };
+        e.preventDefault();
+        break;
+    }
+  });
+
+  tankBtn.addEventListener("click", () => switchMode(false));
+  snakesBtn.addEventListener("click", () => switchMode(true));
+  playAgainBtn.addEventListener("click", startGame);
+})();
