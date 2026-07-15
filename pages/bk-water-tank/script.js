@@ -338,7 +338,7 @@
   }
 
   document.addEventListener("keydown", (e) => {
-    if (!gameRunning || !snakesMode.hidden) return;
+    if (!gameRunning || snakesMode.hidden) return;
 
     switch (e.key) {
       case "ArrowUp":
