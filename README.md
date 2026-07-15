@@ -36,6 +36,11 @@ setup.
    git checkout -b <your-name>
    ```
 
+   **If you use SSH keys:** Change the remote to SSH instead of HTTPS:
+   ```
+   git remote set-url origin git@github.com:WMT-GmbH/workshop.git
+   ```
+
 2. Copy the example page into your own folder (use your first name, lowercase):
 
    ```

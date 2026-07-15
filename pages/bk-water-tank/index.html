@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BK's Water Tank - Vibe Coding Workshop</title>
+  <link rel="stylesheet" href="../../shared/style.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <div class="mode-toggle">
+      <button id="tank-btn" class="mode-btn active">Tank Mode</button>
+      <button id="snakes-btn" class="mode-btn">Snakes Game</button>
+    </div>
+
+    <div id="tank-mode" class="mode-content">
+      <h2>BK's Water Tank</h2>
+      <p>
+        A simulated 20&nbsp;L water tank fed by a warm and a cold source, live
+        auto-mixed to hit a target temperature and watched as it settles over
+        time. If the target is hotter than the warm source alone can supply,
+        an inline heater tops up the inflow — see the readouts and the "how it
+        works" section below for the details.
+      </p>
+
+    <p id="data-notice" class="notice" hidden></p>
+    <p id="range-warning" class="notice notice-warning" hidden></p>
+
+    <section class="controls">
+      <label for="target-slider">
+        Target average temperature
+        <span id="target-value" class="value"></span>
+      </label>
+      <input id="target-slider" type="range" min="10" max="45" step="0.5" value="35">
+
+      <label for="flow-slider">
+        Total flow rate
+        <span id="flow-value" class="value"></span>
+      </label>
+      <input id="flow-slider" type="range" min="0.5" max="10" step="0.1" value="5">
+    </section>
+
+    <section class="readouts">
+      <div><span class="label">Container temp</span><span id="readout-container">–</span></div>
+      <div><span class="label">Warm source</span><span id="readout-warm">–</span></div>
+      <div><span class="label">Cold source</span><span id="readout-cold">–</span></div>
+      <div><span class="label">Warm mix ratio</span><span id="readout-ratio">–</span></div>
+      <div><span class="label">Heater power</span><span id="readout-heater">–</span></div>
+    </section>
+
+    <canvas id="chart" width="600" height="240"></canvas>
+
+    <section class="equations">
+      <h3>How it works</h3>
+
+      <p>
+        Each tick, the warm/cold split ratio <em>r</em> is chosen to hit the
+        target average temperature <em>T</em><sub>target</sub>, clamped to
+        what's physically possible from the two sources:
+      </p>
+      <p class="eq">
+        r = clamp( (T<sub>target</sub> − T<sub>cold</sub>) / (T<sub>warm</sub> − T<sub>cold</sub>), 0, 1 )
+      </p>
+
+      <p>That ratio gives the blended inflow temperature before any heating:</p>
+      <p class="eq">
+        T<sub>in</sub> = r · T<sub>warm</sub> + (1 − r) · T<sub>cold</sub>
+      </p>
+
+      <p>
+        If the target exceeds the warm source outright (r would need to
+        exceed 1), the mix switches to 100% warm and a capped heater tops up
+        the inflow the rest of the way:
+      </p>
+      <p class="eq">
+        P<sub>needed</sub> = ṁ · c · (T<sub>target</sub> − T<sub>warm</sub>) ,&nbsp;
+        ṁ = Q · ρ / 60
+        <br>
+        P = min(P<sub>needed</sub>, P<sub>max</sub>) ,&nbsp;
+        T<sub>in</sub> = T<sub>warm</sub> + P / (ṁ · c)
+      </p>
+      <p>
+        where <em>Q</em> is the flow rate (L/min), <em>ρ</em> is water
+        density (1&nbsp;kg/L), <em>c</em> is water's specific heat
+        (4186&nbsp;J/(kg·K)), and <em>P</em><sub>max</sub> is the heater's
+        3&nbsp;kW cap. If <em>P</em><sub>needed</sub> exceeds the cap, the
+        target isn't fully reachable and the warning above appears.
+      </p>
+
+      <p>
+        The container itself is a well-mixed tank of fixed volume
+        <em>V</em> (20&nbsp;L): incoming inflow at <em>T</em><sub>in</sub>
+        continuously dilutes the current contents, so the container
+        temperature settles toward <em>T</em><sub>in</sub> exponentially
+        rather than snapping to it:
+      </p>
+      <p class="eq">
+        dT<sub>container</sub>/dt = (Q / V) · (T<sub>in</sub> − T<sub>container</sub>)
+        <br>
+        T<sub>container</sub>(t+Δt) = T<sub>in</sub> + (T<sub>container</sub>(t) − T<sub>in</sub>) · e<sup>−(Q/V)Δt</sup>
+      </p>
+      <p>
+        The simulation clock runs 20× real time so this settling is visible
+        in seconds instead of minutes.
+      </p>
+    </section>
+    </div>
+
+    <div id="snakes-mode" class="mode-content" hidden>
+      <h2>Snake Game</h2>
+      <p class="snakes-instructions">Use <strong>arrow keys</strong> to move the snake. Eat the orange food to grow and gain points!</p>
+      <div class="snakes-container">
+        <canvas id="snakes-canvas" width="400" height="400"></canvas>
+        <div id="snakes-ui">
+          <div id="snakes-score">Score: 0</div>
+          <div id="snakes-game-over" hidden>
+            <p>Game Over!</p>
+            <p id="snakes-final-score"></p>
+            <button id="snakes-play-again">Play Again</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../../shared/layout.js" defer></script>
+  <script src="script.js" defer></script>
+</body>
+</html>
