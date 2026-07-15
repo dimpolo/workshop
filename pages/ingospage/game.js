@@ -10,6 +10,7 @@
   const gameoverScreen = document.getElementById("gameover-screen");
   const startBtn = document.getElementById("start-btn");
   const restartBtn = document.getElementById("restart-btn");
+  const muteBtn = document.getElementById("mute-btn");
 
   // Immer dieselbe feste Reihenfolge statt zufälliger Steine.
   const SEQUENCE = ["I", "J", "L", "O", "S", "T", "Z"];
@@ -64,6 +65,89 @@
 
   let board, current, sequenceIndex, score, dropTimer, dropInterval, running;
 
+  // Sound: alles per Web Audio API synthetisiert, keine externen Dateien nötig.
+  let audioCtx = null;
+  let masterGain = null;
+  let muted = false;
+  let melodyTimer = null;
+  let melodyIndex = 0;
+
+  const NOTE_FREQ = {
+    A4: 440.0, B4: 493.88, C5: 523.25, D5: 587.33, E5: 659.25,
+    F5: 698.46, G5: 783.99, A5: 880.0,
+  };
+
+  // Die nervige Tetris-Melodie (Korobeiniki), als [Note, Dauer in ms].
+  const MELODY = [
+    ["E5", 200], ["B4", 100], ["C5", 100], ["D5", 200], ["C5", 100], ["B4", 100],
+    ["A4", 200], ["A4", 100], ["C5", 100], ["E5", 200], ["D5", 100], ["C5", 100],
+    ["B4", 300], ["C5", 100], ["D5", 200], ["E5", 200],
+    ["C5", 200], ["A4", 200], ["A4", 200], [null, 200],
+    ["D5", 300], ["F5", 100], ["A5", 200], ["G5", 100], ["F5", 100],
+    ["E5", 300], ["C5", 100], ["E5", 100], ["D5", 100], ["C5", 100], ["B4", 100],
+    ["B4", 100], ["C5", 100], ["D5", 200], ["E5", 200],
+    ["C5", 200], ["A4", 200], ["A4", 200], [null, 200],
+  ];
+
+  function ensureAudio() {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      masterGain = audioCtx.createGain();
+      masterGain.gain.value = muted ? 0 : 0.15;
+      masterGain.connect(audioCtx.destination);
+    }
+    if (audioCtx.state === "suspended") audioCtx.resume();
+  }
+
+  function beep(freq, duration, type, startTime) {
+    if (!audioCtx) return;
+    const t = startTime || audioCtx.currentTime;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = type || "square";
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.0001, t);
+    gain.gain.exponentialRampToValueAtTime(1, t + 0.01);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + duration);
+    osc.connect(gain);
+    gain.connect(masterGain);
+    osc.start(t);
+    osc.stop(t + duration + 0.02);
+  }
+
+  function sfxMove() { beep(220, 0.05); }
+  function sfxRotate() { beep(330, 0.06); }
+  function sfxLock() { beep(140, 0.08); }
+  function sfxLineClear(count) {
+    [523.25, 659.25, 783.99, 1046.5]
+      .slice(0, count)
+      .forEach((f, i) => beep(f, 0.12, "square", audioCtx.currentTime + i * 0.08));
+  }
+  function sfxGameOver() {
+    [523.25, 466.16, 415.3, 349.23].forEach((f, i) =>
+      beep(f, 0.25, "sawtooth", audioCtx.currentTime + i * 0.2)
+    );
+  }
+
+  function playMelodyStep() {
+    if (!running) return;
+    const [note, duration] = MELODY[melodyIndex % MELODY.length];
+    if (note) beep(NOTE_FREQ[note], (duration / 1000) * 0.9);
+    melodyIndex++;
+    melodyTimer = setTimeout(playMelodyStep, duration);
+  }
+
+  function startMusic() {
+    ensureAudio();
+    melodyIndex = 0;
+    clearTimeout(melodyTimer);
+    playMelodyStep();
+  }
+
+  function stopMusic() {
+    clearTimeout(melodyTimer);
+  }
+
   function newBoard() {
     return Array.from({ length: ROWS }, () => Array(COLS).fill(null));
   }
@@ -113,6 +197,7 @@
   }
 
   function lockPiece() {
+    sfxLock();
     current.shape.forEach((row, r) => {
       row.forEach((cell, c) => {
         if (cell) {
@@ -139,6 +224,7 @@
     if (cleared) {
       score += cleared * 10;
       scoreEl.textContent = score;
+      sfxLineClear(cleared);
     }
   }
 
@@ -155,6 +241,7 @@
     const rotated = rotate(current.shape);
     if (!collides(rotated, current.x, current.y)) {
       current.shape = rotated;
+      sfxRotate();
     }
   }
 
@@ -190,10 +277,13 @@
   function gameOver() {
     running = false;
     clearInterval(dropTimer);
+    stopMusic();
+    sfxGameOver();
     gameoverScreen.classList.remove("hidden");
   }
 
   function startGame() {
+    ensureAudio();
     board = newBoard();
     sequenceIndex = 0;
     score = 0;
@@ -206,12 +296,13 @@
     clearInterval(dropTimer);
     dropInterval = 600;
     dropTimer = setInterval(drop, dropInterval);
+    startMusic();
   }
 
   document.addEventListener("keydown", (e) => {
     if (!running) return;
-    if (e.key === "ArrowLeft") move(-1, 0);
-    else if (e.key === "ArrowRight") move(1, 0);
+    if (e.key === "ArrowLeft") { if (move(-1, 0)) sfxMove(); }
+    else if (e.key === "ArrowRight") { if (move(1, 0)) sfxMove(); }
     else if (e.key === "ArrowDown") drop();
     else if (e.key === "ArrowUp") tryRotate();
     else return;
@@ -221,4 +312,10 @@
 
   startBtn.addEventListener("click", startGame);
   restartBtn.addEventListener("click", startGame);
+
+  muteBtn.addEventListener("click", () => {
+    muted = !muted;
+    if (masterGain) masterGain.gain.value = muted ? 0 : 0.15;
+    muteBtn.textContent = muted ? "🔇" : "🔊";
+  });
 })();
