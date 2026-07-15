@@ -1,3 +1,4 @@
 [
-  { "name": "_example", "title": "Example Page", "description": "A short one-line description of what this page is about." }
+  { "name": "_example", "title": "Example Page", "description": "A short one-line description of what this page is about." },
+  { "name": "ingospage", "title": "Ingos Tetris", "description": "Ein einfaches Tetris mit fester Steinreihenfolge." }
 ]
