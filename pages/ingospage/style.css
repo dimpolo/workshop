@@ -1,0 +1,35 @@
+/* Feel free to change any of this - it's just here to get you started. */
+
+h2 {
+  color: #6a2be2;
+}
+
+#game {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+#board {
+  background: #111;
+  border: 2px solid #333;
+}
+
+.side {
+  min-width: 8rem;
+}
+
+.screen.hidden {
+  display: none;
+}
+
+.controls {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+button {
+  font-size: 1rem;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+}

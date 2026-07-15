@@ -1,0 +1,188 @@
+/* Frieren's Forecast - fantasy/parchment theme */
+
+body {
+  --fantasy-serif: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+  background: #efe4cc;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(120, 100, 60, 0.03) 0px, rgba(120, 100, 60, 0.03) 1px, transparent 1px, transparent 3px);
+  color: #3b2f22;
+}
+
+h2 {
+  font-family: var(--fantasy-serif);
+  color: #5b4326;
+  letter-spacing: 0.02em;
+}
+
+.forecast-stage {
+  margin-top: 1.5rem;
+  border: 1px solid #c9b78f;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: #fbf6e7;
+  box-shadow: 0 2px 10px rgba(80, 60, 30, 0.15);
+}
+
+.sky {
+  position: relative;
+  height: 320px;
+  background: linear-gradient(180deg, #a9c9dd 0%, #cddce7 55%, #e9dcc3 100%);
+  overflow: hidden;
+}
+
+/* Cloud */
+
+.cloud {
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  width: 130px;
+  height: auto;
+  filter: drop-shadow(0 2px 3px rgba(40, 30, 10, 0.35));
+  transition: color 0.4s ease;
+}
+
+.cloud-shape {
+  fill: #ffffff;
+  transition: fill 0.4s ease;
+}
+
+.cloud.bad .cloud-shape {
+  fill: #201d1a;
+}
+
+.rain,
+.bolt {
+  display: none;
+}
+
+.cloud.bad.show-rain .rain {
+  display: block;
+}
+
+.cloud.bad.show-bolt .bolt {
+  display: block;
+}
+
+.rain line {
+  stroke: #4a6fa1;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.bolt polygon {
+  fill: #e8b93f;
+}
+
+/* Frieren illustration */
+
+.frieren {
+  position: absolute;
+  left: 24px;
+  bottom: 0;
+  height: 300px;
+  width: auto;
+}
+
+.hair-back,
+.hair-cap,
+.fringe {
+  fill: #f2ead6;
+}
+
+.ear {
+  fill: #f0d3b8;
+}
+
+.head {
+  fill: #f4d9c1;
+}
+
+.sleeve {
+  fill: #395236;
+}
+
+.cloak {
+  fill: #43613f;
+}
+
+.collar {
+  fill: #324a30;
+}
+
+.brooch {
+  fill: #d9a441;
+}
+
+.eye {
+  fill: #2e4030;
+}
+
+.mouth {
+  stroke: #6b4a37;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+/* Speech bubble */
+
+.speech-bubble {
+  position: absolute;
+  left: 110px;
+  top: 26px;
+  max-width: 220px;
+  background: #fffaf0;
+  border: 1px solid #c9b78f;
+  border-radius: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: #3b2f22;
+  box-shadow: 0 2px 6px rgba(60, 40, 10, 0.2);
+}
+
+.speech-bubble::after {
+  content: "";
+  position: absolute;
+  left: 20px;
+  bottom: -10px;
+  border-width: 10px 8px 0 0;
+  border-style: solid;
+  border-color: #fffaf0 transparent transparent transparent;
+}
+
+.speech-bubble::before {
+  content: "";
+  position: absolute;
+  left: 19px;
+  bottom: -12px;
+  border-width: 11px 9px 0 0;
+  border-style: solid;
+  border-color: #c9b78f transparent transparent transparent;
+}
+
+/* Weather info panel */
+
+.weather-info {
+  padding: 1rem 1.25rem 1.25rem;
+  border-top: 1px solid #dccfa8;
+  text-align: center;
+}
+
+.weather-temp {
+  font-family: var(--fantasy-serif);
+  font-size: 2.25rem;
+  margin: 0.25rem 0;
+  color: #5b4326;
+}
+
+#weather-condition {
+  color: #6b5b3e;
+  margin: 0;
+}
+
+#weather-status {
+  margin: 0 0 0.25rem;
+  font-size: 0.9rem;
+  color: #8a7a58;
+}

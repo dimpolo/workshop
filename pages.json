@@ -1,4 +1,9 @@
 [
   { "name": "_example", "title": "Example Page", "description": "A short one-line description of what this page is about." },
-  { "name": "max", "title": "Staircase Calculator", "description": "Calculate the steps and floor space needed for a staircase." }
+  { "name": "max", "title": "Staircase Calculator", "description": "Calculate the steps and floor space needed for a staircase." },
+  { "name": "vitalii", "title": "Vitalii", "description": "Watts to dBm converter with instant, bidirectional recalculation." },
+  { "name": "rudi", "title": "Frieren's Forecast", "description": "An ancient elf mage delivers the current Stuttgart weather forecast, deadpan as ever." },
+  { "name": "bk-water-tank", "title": "BK's Water Tank", "description": "A live weather-driven water tank sim: auto-mixes warm/cold sources (with a heater backup) to hit a target temperature, charted in real time." },
+  { "name": "dimi", "title": "Emoji Mosaic", "description": "Turn any photo into a mosaic of color-matched emoji." },
+  { "name": "ingospage", "title": "Ingos Tetris", "description": "Ein einfaches Tetris mit fester Steinreihenfolge." }
 ]

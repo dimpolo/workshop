@@ -1,0 +1,55 @@
+/* Feel free to change any of this - it's just here to get you started. */
+
+h2 {
+  color: #6a2be2;
+}
+
+.converter {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.field label {
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.field input {
+  font-size: 1.1rem;
+  padding: 0.4rem 0.5rem;
+}
+
+#output-value {
+  background: #f3f0fa;
+}
+
+#swap-button {
+  font-size: 1.3rem;
+  line-height: 1;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid #6a2be2;
+  border-radius: 50%;
+  background: white;
+  color: #6a2be2;
+  cursor: pointer;
+}
+
+#swap-button:hover {
+  background: #6a2be2;
+  color: white;
+}
+
+.status {
+  min-height: 1.2rem;
+  color: #b00020;
+  font-size: 0.9rem;
+}
