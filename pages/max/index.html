@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Staircase Calculator - Vibe Coding Workshop</title>
+  <link rel="stylesheet" href="../../shared/style.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h2>Staircase Calculator super gut</h2>
+    <p>Calculate the steps and floor space needed for a staircase.</p>
+
+    <form id="calc-form">
+      <div class="field">
+        <label for="total-height">Total height to climb (cm)</label>
+        <input type="number" id="total-height" name="total-height" value="270" min="1" step="1">
+      </div>
+      <div class="field">
+        <label for="riser-height">Riser height per step (cm)</label>
+        <input type="number" id="riser-height" name="riser-height" value="18" min="1" step="0.1">
+      </div>
+      <div class="field">
+        <label for="tread-depth">Tread depth per step (cm)</label>
+        <input type="number" id="tread-depth" name="tread-depth" value="27" min="1" step="0.1">
+      </div>
+    </form>
+
+    <section id="results">
+      <dl>
+        <dt>Steps</dt>
+        <dd id="result-steps"></dd>
+        <dt>Height covered</dt>
+        <dd id="result-covered"></dd>
+        <dt>Height shortfall</dt>
+        <dd id="result-shortfall"></dd>
+        <dt>Total run (floor space)</dt>
+        <dd id="result-run"></dd>
+        <dt>Incline angle</dt>
+        <dd id="result-angle"></dd>
+      </dl>
+      <p id="warnings"></p>
+    </section>
+
+    <svg id="diagram" viewBox="0 0 400 300" preserveAspectRatio="xMidYMax meet" aria-label="Staircase side profile diagram"></svg>
+  </main>
+
+  <script src="../../shared/layout.js" defer></script>
+  <script src="script.js" defer></script>
+</body>
+</html>
