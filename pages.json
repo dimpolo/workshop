@@ -1,3 +1,4 @@
 [
-  { "name": "_example", "title": "Example Page", "description": "A short one-line description of what this page is about." }
+  { "name": "_example", "title": "Example Page", "description": "A short one-line description of what this page is about." },
+  { "name": "vitalii", "title": "Vitalii", "description": "Watts to dBm converter with instant, bidirectional recalculation." }
 ]

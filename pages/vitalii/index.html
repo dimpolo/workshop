@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vitalii - Vibe Coding Workshop</title>
+  <link rel="stylesheet" href="../../shared/style.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h2>Vitalii</h2>
+    <p>Watts &harr; dBm converter.</p>
+
+    <form class="converter" id="converter-form">
+      <div class="field">
+        <label for="input-value" id="input-label">Watts</label>
+        <input type="number" id="input-value" step="any" placeholder="Enter watts">
+      </div>
+
+      <button type="button" id="swap-button" aria-label="Swap conversion direction">&#8646;</button>
+
+      <div class="field">
+        <label for="output-value" id="output-label">dBm</label>
+        <input type="number" id="output-value" step="any" readonly>
+      </div>
+    </form>
+
+    <p class="status" id="status-line" role="status"></p>
+  </main>
+
+  <script src="../../shared/layout.js" defer></script>
+  <script src="script.js" defer></script>
+</body>
+</html>
