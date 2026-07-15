@@ -7,7 +7,7 @@ on each other's changes.
 Once your pull request is merged, the site redeploys and your page goes live at:
 
 ```
-https://dimpolo.github.io/workshop/pages/<your-name>/
+https://WMT-GmbH.github.io/workshop/pages/<your-name>/
 ```
 
 ## Client-side only
@@ -31,7 +31,7 @@ setup.
 1. Clone the repo and create a branch for yourself:
 
    ```
-   git clone https://github.com/dimpolo/workshop.git
+   git clone https://github.com/WMT-GmbH/workshop.git
    cd workshop
    git checkout -b <your-name>
    ```
