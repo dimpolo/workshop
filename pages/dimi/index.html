@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Emoji Mosaic - Vibe Coding Workshop</title>
+  <link rel="stylesheet" href="../../shared/style.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <h2>🧩 Emoji Photo Mosaic</h2>
+      <p>Hi, I'm Dimi!!! — upload a photo and I'll turn it into a mosaic made of emoji.</p>
+    </section>
+
+    <section class="tool-card" id="toolCard">
+      <div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
+
+      <div id="dropzone" class="dropzone" tabindex="0" role="button" aria-label="Upload a photo">
+        <span class="dropzone-icon" aria-hidden="true">📸</span>
+        <p id="dropzoneText">Drop an image here, or click to choose one</p>
+      </div>
+      <input type="file" id="fileInput" accept="image/*" hidden>
+      <p id="errorText" class="error" hidden></p>
+
+      <div class="controls" id="controls" hidden>
+        <label for="density">Grid density: <span id="densityValue">40</span> columns</label>
+        <input type="range" id="density" min="15" max="80" value="40">
+      </div>
+
+      <div class="preview" id="previewArea" hidden>
+        <div class="preview-pane">
+          <h3>Original</h3>
+          <div class="frame"><img id="originalImage" alt="Original upload"></div>
+        </div>
+        <div class="preview-pane">
+          <h3>Emoji mosaic</h3>
+          <div class="frame" id="mosaicFrame"><canvas id="mosaicCanvas"></canvas></div>
+        </div>
+      </div>
+
+      <button id="downloadBtn" hidden>⬇ Download image</button>
+
+      <p class="caveat" id="caveatNote" hidden>
+        Note: emoji glyphs render differently across operating systems and browsers, so
+        the mosaic's exact look will vary depending on the device viewing it — that's a
+        feature of system emoji fonts, not a bug.
+      </p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+  <script src="../../shared/layout.js" defer></script>
+</body>
+</html>
